@@ -5,16 +5,27 @@ headerInput = document.querySelector(".header-input "),
 todoList = document.querySelector(".todo-list "),
 todoCompleted = document.querySelector(".todo-completed");
 
-let todoData = [];
-function backData(){
-   todoData = JSON.parse(localStorage.getItem("todoData"));
-   
-}
-function local(){
-   localStorage.setItem("todoData", JSON.stringify(todoData));
-   
-}
 
+let todoData = JSON.parse(localStorage.getItem("todoData"));  
+if (!todoData) {
+   todoData = []}
+//if we do not have anything in tododata we are
+//parsing an empty [] to LocalStorage. Because, if there are no elements
+//the todo is null and it gives you an error before even start.
+
+function local(){
+   localStorage.setItem("todoData", JSON.stringify(todoData)); 
+};
+const delItem = function(itemToDelete){
+   let newTodoData = [];
+   todoData.forEach(function(item){
+      if(item !== itemToDelete){
+         newTodoData.push(item);
+      }
+   })
+   todoData = newTodoData; //we are literally removing useless elements to
+   //another array, which is not displayed anywhere. Genius!
+}
 const render = function() {
    todoList.textContent ='';
    todoCompleted.textContent = '';
@@ -42,14 +53,9 @@ const render = function() {
       });
       
       const btnRemove = li.querySelector('.todo-remove');
-      btnRemove.addEventListener('click', function(event, i){
-            if(item.todoData === event.target.innerHTML){
-               if(event.onclick){
-                  todoData.splice(i , 1);
-               }
-            }
-         render(); 
-         local();
+      btnRemove.addEventListener('click', function(){
+         delItem(item);
+         render();  
       });
    })
   local();
@@ -66,10 +72,12 @@ todoControl.addEventListener("submit", function(event){
          completed:false
       };
       todoData.push(newTodo);    
-     local() 
-     render();
+      render();
    }
       headerInput.value = "";
 });
-backData();//must be here
-render();
+if(todoData){
+   render();
+} else {
+   todoData = [];// render only if there is an object present.
+}
