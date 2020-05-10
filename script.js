@@ -26,17 +26,11 @@ DomElement.prototype.createB = function(){
 let classN = new DomElement(".block", "options");
 let idN = new DomElement("#block", "options");
 
-
-let bom ={
-   selector: "#block"
-}
-
 classN.createB();
-console.log(classN);
+console.log(typeof classN);
 idN.createB();
 console.log(idN);
 
-bom.prototype.createB();
 
 
 
