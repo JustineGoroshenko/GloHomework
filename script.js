@@ -1,14 +1,13 @@
 'use strict';
 function DomElement(selector, options){
    this.selector = selector;
-   options || options ||{};
    this.height = options.height;
    this.width = options.width;
    this.background = options.background;
    this.fontSize = options.fontSize;
 };
 DomElement.prototype.createB = function(){
-      if( this.selector !== ".block"){
+      if( this.selector === ".block"){
          let newDiv = document.createElement('div');
          newDiv.classList.add('.block');
          newDiv.style.cssText = "height: 100px; width: 120px; background:pink;font-size:55px";
