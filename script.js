@@ -1,6 +1,7 @@
 'use strict';
 function DomElement(selector, options){
    this.selector = selector;
+   options = options ||{};
    this.height = options.height;
    this.width = options.width;
    this.background = options.background;
